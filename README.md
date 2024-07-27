@@ -4,8 +4,11 @@
 **SUE** : Sum Up Everything
 - 사용한 데이터 : [AI Hub 요약문 및 레포트 생성 데이터](https://www.aihub.or.kr/aihubdata/data/view.do?currMenu=115&topMenu=100&aihubDataSe=data&dataSetSn=582)
 - 사용한 AI 모델 : [KoBART-summarization](https://github.com/seujung/KoBART-summarization)
+- 파인튜닝 된 AI 모델 : [GoogleDrive](https://drive.google.com/file/d/1vOo9yDFIm4W6hQt-qBH1eCl6rjwl2RXb/view?usp=sharing)
 
 최근 유행하던 숏폼 컨텐츠를 활용하여 젊은 층이 비교적 쉽게 뉴스를 접하게 하는 것이 목표
 
 - NLP에 대해 공부하고 LLM 활용을 배우기
 - 실시간 웹크롤링을 통한 뉴스 데이터 수집 구현
+
+로컬서버, 노트북에서 ipynb 파일 실행을 통해 실시간으로 웹크롤링을 진행하고, cmder 을 통해 서버를 구동한다.

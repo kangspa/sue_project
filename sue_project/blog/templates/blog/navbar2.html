@@ -1,0 +1,90 @@
+<div class="container mt-3">
+    <div id="NEWS" class="d-flex">
+        <div class="card flex-fill border-0">
+            <div class="card-header text-center" id="NEWSALL" data-toggle="collapse" data-target="#collapseALL" aria-expanded="true" aria-controls="collapseALL">
+                <h5 class="mb-0">
+                    전체
+                </h5>
+            </div>
+            <div id="collapseALL" class="collapse border-0" aria-labelledby="NEWSALL" data-parent="#NEWS">
+                <div class="card-body">
+                    <ul>
+                        <li>
+                            <a href="/blog/" class="text-dark">전체</a>
+                        </li>
+                        {% for category in categories %}
+                            <li>
+                                <a href="{{ category.get_absolute_url }}" class="text-dark">{{ category.name }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="card flex-fill border-0">
+            <div class="card-header text-center" id="NEWSKBS" data-toggle="collapse" data-target="#collapseKBS" aria-expanded="true" aria-controls="collapseKBS">
+                <h5 class="mb-0">
+                    KBS
+                </h5>
+            </div>
+            <div id="collapseKBS" class="collapse" aria-labelledby="NEWSKBS" data-parent="#NEWS">
+                <div class="card-body">
+                    <ul>
+                        <li>
+                            <a href="/blog/news/KBS" class="text-dark">전체</a>
+                        </li>
+                        {% for news in news1.field.all %}
+                        <li>
+                            <a href="/blog/news_category/KBS/{{ news.slug }}" class="text-dark">{{ news }}</a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="card flex-fill border-0">
+            <div class="card-header text-center" id="NEWSSBS" data-toggle="collapse" data-target="#collapseSBS" aria-expanded="true" aria-controls="collapseSBS">
+                <h5 class="mb-0">
+                    SBS
+                </h5>
+            </div>
+            <div id="collapseSBS" class="collapse" aria-labelledby="NEWSSBS" data-parent="#NEWS">
+                <div class="card-body">
+                    <ul>
+                        <li>
+                            <a href="/blog/news/SBS" class="text-dark">전체</a>
+                        </li>
+                        {% for news in news2.field.all %}
+                        <li>
+                            <a href="/blog/news_category/SBS/{{ news.slug }}" class="text-dark">{{ news }}</a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="card flex-fill border-0">
+            <div class="card-header text-center" id="NEWSMBC" data-toggle="collapse" data-target="#collapseMBC" aria-expanded="true" aria-controls="collapseMBC">
+                <h5 class="mb-0">
+                    MBC
+                </h5>
+            </div>
+            <div id="collapseMBC" class="collapse" aria-labelledby="NEWSMBC" data-parent="#NEWS">
+                <div class="card-body">
+                    <ul>
+                        <li>
+                            <a href="/blog/news/MBC" class="text-dark">전체</a>
+                        </li>
+                        {% for news in news3.field.all %}
+                        <li>
+                            <a href="/blog/news_category/MBC/{{ news.slug }}" class="text-dark">{{ news }}</a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

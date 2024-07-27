@@ -1,0 +1,21 @@
+0. sue_project 폴더에 do_it_django_prj 폴더 안에 있는 settings.py에 DATABASES 부분을 수정한다.
+1. cmder를 설치한다. Mini로 받으시면 됩니다.
+2. cmder를 실행하여 sue_project폴더를 c드라이브로 옮기고 cmder에서 주소를 찾아간다. (cd .. -> cd sue_project)
+3. venv\scripts\activate.bat 으로 가상환경을 실행시켜 준다.
+4. pip install -r requirements.txt 으로 pip를 업데이트 해준다
+5. python manage.py migrate로 django세팅을 해주고
+6. python manage.py createsuperuser로 슈퍼유저를 만들어준다
+이름(id)->이메일주소->비밀번호(안보임)->비밀번호 재입력
+7. python manage.py runserver을 이용해 서버를 켜준다
+8. 127.0.0.1:8000/admin 주소로 가서 방금 만든 아이디로 로그인한다
+9. 들어가서 categories 부분을 클릭하고 오른쪽 위에 있는 ADD CATEGORY를 이용해
+정치, 경제, 사회, 문화, IT과학, 국제 재난환경, 생활건강, 스포츠, 연예, 날씨, 이슈, 생활문화, imbc연예
+순서로 만들고
+10. 똑같은 방식으로 News 부분을 만든다
+KBS를 만드는걸 예로 들으면 Name 부분에 KBS를 입력하고 Slug 부분에도 KBS를 입력하고
+카테고리에 맞게 Field 부분에서 포함된 카테고리에 맞게 Ctrl키를 눌러 추가해준다.
+KBS_field = [정치, 경제, 사회, 문화, IT과학, 국제, 재난환경, 생활건강, 스포츠, 연예, 날씨, 이슈]
+SBS_field = [정치, 경제, 사회, 국제, 생활문화, 스포츠, 연예]
+MBC_field = [정치, 경제, 사회, 국제, 스포츠, imbc연예]
+11. news_update폴더에 들어가서 news_update.py의 데이터베이스를 변경 후 실행시킨다.
+12. 127.0.0.1:8000이 로컬사이트 주소입니다.

@@ -1,0 +1,120 @@
+{% extends 'blog/base.html' %}
+{% load crispy_forms_tags %}
+{% block head_title %}
+{{ post.title }} | Blog
+{% endblock %}
+
+{% block main_area %}
+<div id="post_area">
+    <article>
+        <!-- Post header-->
+        <header class="mb-4">
+            <!-- badge field-->
+            {% if post.field %}
+            <span class="badge badge-secondary float-right">{{ post.field }}</span>
+            {% else %}
+            <span class="badge badge-secondary float-right">미분류</span>
+            {% endif %}
+            <!-- Post title-->
+            <h1 class="fw-bolder mb-1">{{ post.title }}</h1>
+            <!-- Post meta content-->
+            <p class="lead">
+                by
+                <a href="#">{{ post.writer | upper }}</a>
+            </p>
+            <div class="text-muted fst-italic mb-2">
+                Posted on {{ post.time }}
+                {% if user.is_authenticated and user == post.author %}
+                <a type="button" href="/blog/update_post/{{ post.pk }}" class="btn btn-info btn-sm float-right"><i class="fas fa-pen"></i>&nbsp Edit Post</a>
+                {% endif %}
+            </div>
+        </header>
+        <!-- Preview image figure-->
+        {% if post.image %}
+        <img class="card-img-top" src="{{ post.image }}" alt="{{ p.title }}" />
+        {% else %}
+        <img class="card-img-top" src="https://picsum.photos/seed/{{ post.id }}/700/300" alt="{{ p.title }}" />
+        {% endif %}
+        <!-- Post content-->
+        <p>{{ post.get_content_long | safe }}</p>
+        <br>
+        <h6>출처 &nbsp: <a href="{{ post.url }}">{{ post.url }}</a></h6>
+    </article>
+    <hr>
+</div>
+
+<!-- Comments section-->
+<section class="mb-4">
+    <div class="card bg-light" id="comment-area">
+        <div class="card-body">
+            <!-- Comment form-->
+            {% if user.is_authenticated %}
+            <form id="comment-form" method="POST" action="{{ post.get_absolute_url }}new_comment/">
+                {% csrf_token %}
+                <div class="form-group">
+                    {{ comment_form | crispy  }}
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+            {% else %}
+            <a role="button" type="button" class="btn btn-outline-dark btn-block btn-sm" href="#" data-toggle="modal" data-target="#loginModal">Log in and leave a comment</a>
+            {% endif %}
+            <br>
+            {% if post.comment_set.exists %}
+            {% for comment in post.comment_set.iterator %}
+            <!-- Comment with nested comments-->
+            <div class="media mb-4" id="comment-{{ comment.pk }}">
+                <img class="d-flex mr-3 rounded-circle" src="{{ comment.get_avatar_url }}" alt="{{ comment.author }}" width="50px">
+                <div class="media-body">
+                    {% if user.is_authenticated and comment.author == user %}
+                    <div class="float-right">
+                        <a class="btn btn-sm btn-info"
+                           role="button"
+                           id="comment-{{ comment.pk }}-update-btn"
+                           href="/blog/update_comment/{{ comment.pk }}/">edit</a>
+                        <a class="btn btn-sm btn-danger"
+                           role="button"
+                           id="comment-{{ comment.pk }}-delete-btn"
+                           data-toggle="modal"
+                           data-target="#deleteCommentModal-{{ comment.pk }}"
+                           href="#">delete</a>
+                    </div>
+
+                    <!-- Modal {{ comment.pk }}-->
+                    <div class="modal fade" id="deleteCommentModal-{{ comment.pk }}" tabindex="-1" aria-labelledby="deleteComment-{{ comment.pk }}-ModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="deleteCommentModalLabel-{{ comment.pk }}"> Are You Sure?</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    {{ comment.comment | linebreaks }}
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <a role="button"
+                                       type="button"
+                                       class="btn btn-danger"
+                                       href='/blog/delete_comment/{{ comment.pk }}/'>
+                                        Delete</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    <h5 class="mt-0">{{ comment.author.username }} <small class="text-muted">{{ comment.created_at }}</small></h5>
+                    {{ comment.comment | linebreaks }}
+                    {% if comment.is_updated %}
+                    <p class="text-muted float-right">Updated: {{ comment.updated_at }}</p>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}
